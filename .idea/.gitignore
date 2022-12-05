@@ -1,0 +1,9 @@
+/shelf/
+/workspace.xml
+.project
+.classpath
+.settings/
+.repository/
+target/
+.idea
+*.iml
