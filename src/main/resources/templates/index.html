@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Spring Boot ajax example</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="webjars/bootstrap/5.2.3/css/bootstrap.min.css" />
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">AWS Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active link-light" id="take-loan" aria-current="page" href="#">Request Loan</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light" id="search-client" href="#">Clients</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light" id="search-loan" href="#">Loans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link-light" id="contracts" href="#">Contracts</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container" style="min-height: 500px">
+  <div class="starter-template">
+    <br>
+    <h1>Loan Application</h1>
+    <br>
+    <form class="form-horizontal" id="take-loan-form">
+      <div class="form-group form-group-lg">
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Name</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="Ivan" class="form-control" id="firstName" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Middle</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="Ivanovich" class="form-control" id="middleName" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Lastname</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="Ivanov" class="form-control" id="lastName" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Passport</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="1234567890" class="form-control" id="passportId" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Address</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="Volgograd" class="form-control" id="placeOfResidence" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Phone</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="7987654321" class="form-control" id="phoneNumber" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Since</label>
+          <div class="col-sm-4">
+            <input type="date" class="form-control" pattern="\d{4}-\d{2}-\d{2}" id="from" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Until</label>
+          <div class="col-sm-4">
+            <input type="date" class="form-control" pattern="\d{4}-\d{2}-\d{2}" id="to" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Position</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="Software Engineer" class="form-control" id="position" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Company</label>
+          <div class="col-sm-4">
+            <input type="text" placeholder="Company Name" class="form-control" id="companyName" />
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <label class="col-sm-1 col-form-label">Desired amount</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" id="loanAmount" />
+          </div>
+        </div>
+        <br>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" id="bth-search" class="btn btn-outline-success">
+            <span id="spinner-border" class="spinner-border spinner-border-sm" role="status" hidden></span>
+            Submit </button>
+        </div>
+      </div>
+    </form>
+    <form class="form-horizontal" style="display: none;" id="search-client-form">
+      <div class="form-group form-group-lg">
+        <label class="col-sm-1 col-form-label">Lastname</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="lastNameSearch" />
+        </div>
+        <label class="col-sm-1 col-form-label">Phone</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="phoneNumberSearch" />
+        </div>
+        <label class="col-sm-1 col-form-label">Passport</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="passportIdSearch" />
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" id="bth-search-client" class="btn btn-outline-success">
+            Search </button>
+        </div>
+      </div>
+      <br>
+    </form>
+
+    <form class="form-horizontal" style="display: none;" id="search-loan-form">
+      <div class="form-group form-group-lg">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="checkApproved">
+          <label class="form-check-label" for="checkApproved">
+            Approved
+          </label>
+        </div>
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="checkDenied">
+        <label class="form-check-label" for="checkDenied">
+          Denied
+        </label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" id="bth-search-loan" class="btn btn-outline-success">
+            Search </button>
+        </div>
+      </div>
+      <br>
+    </form>
+
+    <form class="form-horizontal" style="display: none;" id="search-contract-form">
+      <div class="form-group form-group-lg">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="checkSigned">
+          <label class="form-check-label" for="checkSigned">
+            Signed Contracts
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="checkNotSigned">
+          <label class="form-check-label" for="checkNotSigned">
+            Not Signed Contracts
+          </label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" id="bth-contract-loan" class="btn btn-outline-success">
+            Search </button>
+        </div>
+      </div>
+      <br>
+    </form>
+
+    <form class="form-horizontal" style="display: none;" id="sign-contract-form">
+      <div class="form-group form-group-lg">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="isSigned">
+          <label class="form-check-label" for="checkApproved">
+            I agree with Contract Terms.
+          </label>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" id="btn-sign-contract" class="btn btn-outline-success">
+            I sign an agreement </button>
+        </div>
+      </div>
+      <br>
+    </form>
+
+  </div>
+  <div id="feedback"></div>
+  <br>
+  <button type="submit" style="display: none;" id="btn-continue" class="btn btn-outline-primary">Continue</button>
+  <div class="col-lg-10" id="search-clients-table" style="display: none;">
+    <table class="table table-bordered table-striped" id="search-clients">
+      <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Middle</th>
+        <th>Lastname</th>
+        <th>Phone</th>
+        <th>Passport</th>
+        <th>Address</th>
+        <th>Company</th>
+        <th>Position</th>
+        <th>Since</th>
+        <th>Until</th>
+      </tr>
+      </thead>
+      <tbody id="found-clients"></tbody>
+    </table>
+  </div>
+  <div class="col-lg-10" id="search-loan-table" style="display: none;">
+    <table class="table table-bordered table-striped" id="search-loans">
+      <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Middle</th>
+        <th>Lastname</th>
+        <th>Days</th>
+        <th>Approved amount</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody id="found-loans"></tbody>
+    </table>
+  </div>
+  <div class="col-lg-10" id="search-contract-table" style="display: none;">
+    <table class="table table-bordered table-striped" id="search-contracts">
+      <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Middle</th>
+        <th>Lastname</th>
+        <th>Days</th>
+        <th>Approved amount</th>
+        <th>Status</th>
+        <th>Date of signature</th>
+        <th>Signature</th>
+      </tr>
+      </thead>
+      <tbody id="found-contracts"></tbody>
+    </table>
+  </div>
+</div>
+<div class="container text-center p-4">
+  <footer>
+    <p> © <a href="mailto:zhibareva.a@gmail.com">Zhibareva</a> 2022 </p>
+  </footer>
+</div>
+<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
